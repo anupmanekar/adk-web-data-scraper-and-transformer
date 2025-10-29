@@ -1,0 +1,16 @@
+ARG PLATFORM=linux/amd64
+
+FROM python:3.11-slim
+ 
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+ 
+ADD . /app
+ 
+WORKDIR /app
+
+RUN uv sync --locked
+
+EXPOSE 8080
+
+ENTRYPOINT ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+#CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port 8080"]
