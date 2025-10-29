@@ -77,6 +77,11 @@ class TaskAdapter:
             await page.wait_for_timeout(10000)
             logger.info("Waited for content load")
             
+            for expand_btn in await page.get_by_text('Expand').all():
+                await expand_btn.click()
+            logger.info("Clicked Expand link")
+            await page.wait_for_timeout(5000)
+
             quick_view_data = await page.locator('div#quickview').text_content()
             logger.info(f'Quick View Data: {quick_view_data}')
 
